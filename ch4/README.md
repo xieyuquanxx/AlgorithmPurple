@@ -10,7 +10,7 @@
 
 3-5
 - [x] UVa512 (WA*3) T_T
-- [x] <font color=#74B566>UVa201</font>
+- [x] UVa201
 
 ## 样例代码
 
