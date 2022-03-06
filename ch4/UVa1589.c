@@ -17,7 +17,7 @@
 
 int board[MAX][MAX]; // 2 qizi
 int atk[MAX][MAX];
-// char qizi[MAX][MAX];
+char qizi[MAX][MAX];
 int bx, by, gx, gy;
 
 typedef struct Qizi {
@@ -25,14 +25,12 @@ typedef struct Qizi {
   int x, y;
 } Qizi;
 
-const int dir[][2] = {-1, 0, 0, 1, 1, 0, 0, -1};
-const int house_dir[][2] = {-2, 1, -2, -1, -1, 2,  1,  2,
-                            2,  1, 2,  -1, 1,  -2, -1, -2};
-
+const int dir[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}}; // 4个方向
+const int house_dir[8][2] = {{-1, 2}, {1, 2},  {1, -2},  {-1, -2},
+                             {2, 1},  {2, -1}, {-2, -1}, {-2, 1}}; // 马8个方向
 int check_board(int x, int y) { return x >= 1 && x <= 10 && y >= 1 && y <= 9; }
 int check_general(int x, int y) { return x >= 1 && x <= 3 && y >= 4 && y <= 6; }
-int check_safe() {
-  // check whether can eat general
+int check_general_eat() {
   if (by == gy) {
     int k;
     for (k = bx + 1; check_board(k, by) && !is_qizi(k, by); k++)
@@ -40,6 +38,12 @@ int check_safe() {
     if (k == gx)
       return 1;
   }
+  return 0;
+}
+int check_safe() {
+  // check whether can eat general
+  if (check_general_eat())
+    return 1;
   // check whether can move 4 directions to live
   for (int i = 0; i < 4; i++) {
     int nx = bx + dir[i][0], ny = by + dir[i][1];
@@ -53,6 +57,8 @@ int check_safe() {
 void attack2(char name, int x, int y) {
   if (name == 'G') { // 将
     gx = x, gy = y;
+    if (check_general_eat())
+      return;
     for (int k = x - 1; check_board(k, y); k--) {
       if (check_general(k, y)) {
         atk[k][y] = 1;
@@ -76,6 +82,7 @@ void attack2(char name, int x, int y) {
             if (is_black(nx, ny)) {
               atk[nx][ny] = 1;
             } else {
+              atk[nx][ny] = 1;
               break;
             }
           }
@@ -87,7 +94,7 @@ void attack2(char name, int x, int y) {
     }
   } else if (name == 'C') {
     for (int i = 0; i < 4; i++) {
-      for (int nx = x + dir[i][0], ny = y + dir[i][1]; check_board(nx, ny);
+      for (int nx = x + dir[i][0], ny = y + dir[i][1];;
            nx += dir[i][0], ny += dir[i][1]) {
         if (!check_board(nx, ny)) {
           break;
@@ -97,6 +104,7 @@ void attack2(char name, int x, int y) {
           for (int nx2 = nx + dir[i][0], ny2 = ny + dir[i][1];;
                nx2 += dir[i][0], ny2 += dir[i][1]) {
             if (!check_board(nx2, ny2)) {
+              over = 1;
               break;
             }
 
@@ -141,25 +149,25 @@ void attack2(char name, int x, int y) {
   }
 }
 
-// void print_board() {
-//   for (int i = 1; i <= 10; i++) {
-//     for (int j = 1; j <= 9; j++) {
-//       if (is_qizi(i, j)) {
-//         printf("%c ", qizi[i][j]);
-//       } else {
-//         printf("%d ", atk[i][j]);
-//       }
-//     }
-//     printf("\n");
-//   }
-//   printf("\n");
-//   for (int i = 1; i <= 10; i++) {
-//     for (int j = 1; j <= 9; j++) {
-//       printf("%d ", atk[i][j]);
-//     }
-//     printf("\n");
-//   }
-// }
+void print_board() {
+  for (int i = 1; i <= 10; i++) {
+    for (int j = 1; j <= 9; j++) {
+      if (is_qizi(i, j)) {
+        printf("%c ", qizi[i][j]);
+      } else {
+        printf("%d ", atk[i][j]);
+      }
+    }
+    printf("\n");
+  }
+  printf("\n");
+  for (int i = 1; i <= 10; i++) {
+    for (int j = 1; j <= 9; j++) {
+      printf("%d ", atk[i][j]);
+    }
+    printf("\n");
+  }
+}
 
 int main() {
 #ifdef LOCAL
@@ -174,18 +182,18 @@ int main() {
     Qizi qizis[10];
     memset(board, 0, sizeof(board));
     memset(atk, 0, sizeof(atk));
-    // memset(qizi, 0, sizeof(qizi));
+    memset(qizi, 0, sizeof(qizi));
 
     board[bx][by] = 2;
 
-    // qizi[bx][by] = 'B';
+    qizi[bx][by] = 'B';
 
     char nn[10];
     int x, y;
     for (int i = 0; i < n; i++) {
       scanf("%s%d%d", nn, &qizis[i].x, &qizis[i].y);
       board[qizis[i].x][qizis[i].y] = 2;
-      // qizi[x][y] = nn[0];
+      qizi[qizis[i].x][qizis[i].y] = nn[0];
       qizis[i].name = nn[0];
     }
     for (int i = 0; i < n; i++) {
