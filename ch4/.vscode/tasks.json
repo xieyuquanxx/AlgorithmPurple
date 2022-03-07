@@ -10,7 +10,7 @@
                 "${file}",
                 "-o",
                 "${fileDirname}/build/${fileBasenameNoExtension}",
-                "--debug"
+                "-g",
             ],
             "group": {
                 "kind": "build",
