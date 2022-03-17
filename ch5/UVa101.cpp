@@ -21,11 +21,6 @@ const int MAXN = 32;
 vector<int> pile[MAXN];
 int n;
 
-void init() {
-  for (int i = 0; i < MAXN; i++)
-    pile[i].clear();
-}
-
 int find_pile(int block) {
   int p = -1;
   for (int i = 0; i < n && p == -1; i++) {
@@ -48,12 +43,6 @@ void reset_block(int block) {
     pile[pile[p][k]].push_back(pile[p][k]);
   }
   pile[p].resize(i + 1);
-}
-
-void push_top(int a, int b) {
-  int p1 = find_pile(a), p2 = find_pile(b);
-  pile[p2].push_back(a);
-  pile[p1].pop_back();
 }
 
 void push_blocks(int a, int b) {
@@ -84,31 +73,30 @@ int main() {
   freopen("data.in", "r", stdin);
   freopen("data.out", "w", stdout);
 #endif
-  while (cin >> n) {
-    init();
+  cin >> n;
 
-    for (int i = 0; i < n; i++) {
-      pile[i].push_back(i);
-    }
-
-    string op1, op2;
-    int a, b;
-    while (cin >> op1 && op1[0] != 'q') {
-      cin >> a >> op2 >> b;
-      if (a == b)
-        continue;
-      if (op2 == "onto") {
-        reset_block(b);
-      }
-      if (op1[0] == 'm') {
-        reset_block(a);
-        push_top(a, b);
-      }
-      if (op1[0] == 'p') {
-        push_blocks(a, b);
-      }
-    }
-    print_piles();
+  for (int i = 0; i < n; i++) {
+    pile[i].push_back(i);
   }
+
+  string op1, op2;
+  int a, b;
+  while (cin >> op1 && op1[0] != 'q') {
+    cin >> a >> op2 >> b;
+    if (a == b)
+      continue;
+    int p1 = find_pile(a), p2 = find_pile(b);
+    if (p1 == p2)
+      continue;
+    if (op2 == "onto") {
+      reset_block(b);
+    }
+    if (op1[0] == 'm') {
+      reset_block(a);
+    }
+    push_blocks(a, b);
+  }
+  print_piles();
+
   return 0;
 }
