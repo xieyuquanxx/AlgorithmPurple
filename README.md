@@ -5,8 +5,8 @@
 - [x] ch1
 - [x] ch2
 - [x] ch3
-- [ ] ch4 [todo!]
-- [ ] ch5
+- [x] ch4
+- [ ] ch5 `todo!`
 - [ ] ch6
 - [ ] ch7
 - [ ] ch8
