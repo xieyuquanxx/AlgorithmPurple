@@ -5,7 +5,8 @@
 - [x] UVa101(vector)
 
 3-18
-- [x] UVa10815
+- [x] UVa10815(set)
+- [x] UVa156(vector、set)
 
 ## STL初步
 
