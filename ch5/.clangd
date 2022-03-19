@@ -1,7 +1,7 @@
 CompileFlags:                             
     Add: 
       [
-        -std=c++17,
+        -std=c++11,
         -Wno-documentation,
         -Wno-missing-prototypes,
       ]
@@ -11,10 +11,6 @@ Diagnostics:
     [
         performance-*,
         bugprone-*,
-        modernize-*,
         clang-analyzer-*,
-        readability-identifier*,
     ]
-    CheckOptions:
-      readability-identifier-naming.VariableCase: lower_case
 

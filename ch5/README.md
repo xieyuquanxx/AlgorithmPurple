@@ -8,6 +8,9 @@
 - [x] UVa10815(set)
 - [x] UVa156(vector、set)
 
+3-19
+- [x] UVa12096(set、map)
+
 ## STL初步
 
 - `vector`
@@ -18,3 +21,14 @@
 
 - `lower_bound()`函数
   查找**大于或者等于**x的第一个位置。
+
+- 集合的交集`set_union()`函数
+```cpp
+set_union(set1.begin(), set1.end(), set2.begin(), set2.end(),inserter(set3, set3.begin()));
+```
+
+- 集合的并集`set_intersection()`函数
+```cpp
+set<int> set3;
+set_intersection(set1.begin(), set1.end(), set2.begin(), set2.end(),inserter(set3, set3.begin()));
+```
