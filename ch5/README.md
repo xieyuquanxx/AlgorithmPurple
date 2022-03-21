@@ -11,6 +11,9 @@
 3-19
 - [x] UVa12096(set、map)
 
+3-21
+- [x] UVa540(queue)
+
 ## STL初步
 
 - `vector`
