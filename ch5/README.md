@@ -14,6 +14,9 @@
 3-21
 - [x] UVa540(queue)
 
+3-23
+- [x] UVa136
+
 ## STL初步
 
 - `vector`
